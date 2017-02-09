@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="console" packages="">
+	<Properties>
+		<Property name="log-path">c:/logs</Property>
+	</Properties>
+ 	<ThresholdFilter level="trace"/>
+	<Appenders>
+		<RollingFile name="emotionadvisor_service" fileName="${log-path}/emotionadvisor_service.log"
+			filePattern="${log-path}/$${date:yyyy-MM}/emotionadvisor_service-%d{yyyy-MM-dd-HH}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<SizeBasedTriggeringPolicy size="50 MB" />
+			</Policies>
+		</RollingFile>
+		
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+	</Appenders>
+
+	<Loggers>
+
+		<Logger name="com.innominds" level="debug" additivity="false">
+			<AppenderRef ref="emotionadvisor_service" />
+		</Logger>
+
+				
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>
